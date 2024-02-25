@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Project\StoreRequest;
+use App\Http\Requests\Project\UpdateRequest;
 use App\Models\Project;
 use Illuminate\Http\Request;
 
@@ -28,7 +29,6 @@ class ProjectController extends Controller
      */
     public function store(StoreRequest $request): \Illuminate\Http\JsonResponse
     {
-        // プロジェクトを作成
         $project = new Project();
         $project->name = $request->name;
         $project->team_id = 1;
@@ -38,34 +38,32 @@ class ProjectController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * プロジェクトの編集
+     * 
+     * @param  \App\Http\Requests\Project\UpdateRequest  $request
+     * @param  string  $id
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function show(string $id)
+    public function update(UpdateRequest $request, string $id): \Illuminate\Http\JsonResponse
     {
-        //
+        $project = Project::find($id);
+        $project->name = $request->name;
+        $project->save();
+
+        return response()->json($project);
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * プロジェクトの削除
+     * 
+     * @param  string  $id
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function edit(string $id)
+    public function destroy(string $id): \Illuminate\Http\JsonResponse
     {
-        //
-    }
+        $project = Project::find($id);
+        $project->delete();
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        return response()->json(null, 204);
     }
 }

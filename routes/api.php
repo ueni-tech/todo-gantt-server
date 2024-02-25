@@ -23,6 +23,8 @@ use Illuminate\Support\Facades\Route;
 // プロジェクトのルート
 Route::get('/projects', [ProjectController::class, 'index']);
 Route::post('/projects', [ProjectController::class, 'store']);
+Route::put('/projects/{id}', [ProjectController::class, 'update']);
+Route::delete('/projects/{id}', [ProjectController::class, 'destroy']);
 
 //タスクのルート
 Route::get('/tasks', [TaskController::class, 'index']);
