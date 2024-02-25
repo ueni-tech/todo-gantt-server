@@ -18,7 +18,7 @@ class ProjectController extends Controller
     {
         // すべてのプロジェクトを取得
         $projects = Project::all();
-        return response()->json($projects);
+        return response()->json($projects, 200);
     }
 
     /**
@@ -31,7 +31,7 @@ class ProjectController extends Controller
     {
         $project = new Project();
         $project->name = $request->name;
-        $project->team_id = 1;
+        $project->team_id = 1; // あとでリクエストから取得するように変更する
         $project->save();
 
         return response()->json($project, 201);
@@ -50,7 +50,7 @@ class ProjectController extends Controller
         $project->name = $request->name;
         $project->save();
 
-        return response()->json($project);
+        return response()->json($project, 200);
     }
 
     /**
@@ -64,6 +64,6 @@ class ProjectController extends Controller
         $project = Project::find($id);
         $project->delete();
 
-        return response()->json(null, 204);
+        return response()->json($project, 204);
     }
 }
