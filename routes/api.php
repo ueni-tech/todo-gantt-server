@@ -22,6 +22,7 @@ use Illuminate\Support\Facades\Route;
 
 // プロジェクトのルート
 Route::get('/projects', [ProjectController::class, 'index']);
+Route::post('/projects', [ProjectController::class, 'store']);
 
 //タスクのルート
 Route::get('/tasks', [TaskController::class, 'index']);

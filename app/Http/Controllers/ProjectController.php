@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Project\StoreRequest;
 use App\Models\Project;
 use Illuminate\Http\Request;
 
@@ -9,7 +10,7 @@ class ProjectController extends Controller
 {
     /**
      * すべてのプロジェクトを取得
-     * @return \Illuminate\Http\Response
+     * 
      * @return \Illuminate\Http\JsonResponse
      */
     public function index(): \Illuminate\Http\JsonResponse
@@ -20,19 +21,20 @@ class ProjectController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
+     * 新しいプロジェクトを作成
+     * 
+     * @param  \App\Http\Requests\Project\StoreRequest  $request
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function create()
+    public function store(StoreRequest $request): \Illuminate\Http\JsonResponse
     {
-        //
-    }
+        // プロジェクトを作成
+        $project = new Project();
+        $project->name = $request->name;
+        $project->team_id = 1;
+        $project->save();
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
+        return response()->json($project, 201);
     }
 
     /**

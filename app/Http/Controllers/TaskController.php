@@ -9,7 +9,7 @@ class TaskController extends Controller
 {
     /**
      * すべてのタスクを取得
-     * @return \Illuminate\Http\Response
+     * 
      * @return \Illuminate\Http\JsonResponse
      */
     public function index() : \Illuminate\Http\JsonResponse
