@@ -23,6 +23,9 @@ use Illuminate\Support\Facades\Route;
 
 // チームのルート
 Route::get('/teams', [TeamController::class, 'index']);
+Route::post('/teams', [TeamController::class, 'store']);
+Route::put('/teams/{id}', [TeamController::class, 'update']);
+Route::delete('/teams/{id}', [TeamController::class, 'destroy']);
 
 // プロジェクトのルート
 Route::get('/projects', [ProjectController::class, 'index']);
