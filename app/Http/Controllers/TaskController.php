@@ -44,7 +44,7 @@ class TaskController extends Controller
     /**
      * 指定されたタスクの更新
      */
-    public function update(UpdateRequest $request, string $id)
+    public function update(UpdateRequest $request, string $id): \Illuminate\Http\JsonResponse
     {
         $task = Task::find($id);
         $task->name = $request->name;
@@ -59,10 +59,16 @@ class TaskController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * 指定されたタスクの削除
+     * 
+     * @param string $id
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function destroy(string $id)
+    public function destroy(string $id): \Illuminate\Http\JsonResponse
     {
-        //
+        $task = Task::find($id);
+        $task->delete();
+
+        return response()->json($task, 204);
     }
 }
