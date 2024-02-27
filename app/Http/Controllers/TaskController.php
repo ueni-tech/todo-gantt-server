@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Task\StoreRequest;
+use App\Http\Requests\Task\UpdateRequest;
 use App\Models\Task;
 use Illuminate\Http\Request;
 
@@ -19,44 +21,41 @@ class TaskController extends Controller
         return response()->json($tasks);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
+  /**
+   * 新しいタスクを作成
+   * 
+   * @param \App\Http\Requests\Task\StoreRequest $request
+   * @return \Illuminate\Http\JsonResponse
+   */
+  public function store(StoreRequest $request): \Illuminate\Http\JsonResponse
+  {
+    $task = new Task();
+    $task->name = $request->name;
+    $task->project_id = $request->project_id;
+    $task->note = $request->note;
+    $task->start_date = $request->start_date;
+    $task->end_date = $request->end_date;
+    $task->is_completed = $request->is_completed;
+    $task->save();
+
+    return response()->json($task, 201);
+  }
 
     /**
-     * Store a newly created resource in storage.
+     * 指定されたタスクの更新
      */
-    public function store(Request $request)
+    public function update(UpdateRequest $request, string $id)
     {
-        //
-    }
+        $task = Task::find($id);
+        $task->name = $request->name;
+        $task->project_id = $request->project_id;
+        $task->note = $request->note;
+        $task->start_date = $request->start_date;
+        $task->end_date = $request->end_date;
+        $task->is_completed = $request->is_completed;
+        $task->save();
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
+        return response()->json($task, 200);
     }
 
     /**

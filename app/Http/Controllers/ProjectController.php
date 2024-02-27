@@ -38,7 +38,7 @@ class ProjectController extends Controller
     }
 
     /**
-     * プロジェクトの編集
+     * 指定されたプロジェクトの編集
      * 
      * @param  \App\Http\Requests\Project\UpdateRequest  $request
      * @param  string  $id
@@ -53,12 +53,12 @@ class ProjectController extends Controller
         return response()->json($project, 200);
     }
 
-    /**
-     * プロジェクトの削除
-     * 
-     * @param  string  $id
-     * @return \Illuminate\Http\JsonResponse
-     */
+  /**
+   * 指定されたプロジェクトの削除
+   * 
+   * @param  string  $id
+   * @return \Illuminate\Http\JsonResponse
+   */
     public function destroy(string $id): \Illuminate\Http\JsonResponse
     {
         $project = Project::find($id);
