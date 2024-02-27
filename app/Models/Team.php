@@ -8,4 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Team extends Model
 {
     use HasFactory;
+    public function projects()
+    {
+        return $this->hasMany(Project::class);
+    }
 }
