@@ -2,10 +2,36 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
 {
+  public function register(Request $request)
+  {
+    $validator = Validator::make($request->all(), [
+      'name' => 'required',
+      'email' => 'required|email',
+      'password' => 'required|min:6|confirmed',
+    ]);
+
+    if ($validator->fails()) {
+      return response()->json($validator->errors(), 400);
+    }
+
+    $user = User::create(array_merge(
+      $validator->validated(),
+      ['password' => bcrypt($request->password)]
+    ));
+
+    return response()->json([
+      'message' => 'ユーザー登録が完了しました。',
+      'user' => $user,
+      'token' => auth()->attempt($request->only('email', 'password'))
+    ], 201);
+  }
+
   /**
    * Create a new AuthController instance.
    *
@@ -13,7 +39,7 @@ class AuthController extends Controller
    */
   public function __construct()
   {
-    $this->middleware('auth:api', ['except' => ['login']]);
+    $this->middleware('auth:api', ['except' => ['login', 'register']]);
   }
 
   /**
@@ -26,7 +52,7 @@ class AuthController extends Controller
     $credentials = request(['email', 'password']);
 
     if (!$token = auth()->attempt($credentials)) {
-      return response()->json(['error' => 'Unauthorized'], 401);
+      return response()->json(['error' => '認証に失敗しました'], 401);
     }
 
     return $this->respondWithToken($token);
