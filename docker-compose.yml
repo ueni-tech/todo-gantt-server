@@ -3,6 +3,7 @@ services:
     # FastCGI Component ################################################
     php-fpm:
         build: ./Docker/php-fpm
+        user: 'www-data:www-data'
         volumes:
             - ".:/var/www/laravel-v10-starter:cached"
         expose:
