@@ -11,10 +11,25 @@ class AuthController extends Controller
   public function register(Request $request)
   {
     $validator = Validator::make($request->all(), [
-      'name' => 'required',
-      'email' => 'required|email',
-      'password' => 'required|min:6|confirmed',
-    ]);
+      'name' => 'required|string|unique:users|max:255',
+      'email' => 'required|email|unique:users',
+      'password' => 'required|min:6|regex:/\A(?=.*?[a-z])(?=.*?\d)[a-z\d]{6,100}+\z/i|confirmed'      
+    ],
+    // エラーメッセージのカスタマイズ
+    [
+      'name.required' => '名前を入力してください',
+      'name.string' => '名前は文字列で入力してください',
+      'name.max' => '名前は255文字以内で入力してください',
+      'name.unique' => 'この名前は既に使用されています',
+      'email.unique' => 'このメールアドレスは既に使用されています',
+      'email.required' => 'メールアドレスを入力してください',
+      'email.email' => 'メールアドレスの形式で入力してください',
+      'password.required' => 'パスワードを入力してください',
+      'password.min' => 'パスワードは6文字以上の英数字で入力してください',
+      'password.confirmed' => 'パスワードが一致しません', 
+    ]
+  );
+
 
     if ($validator->fails()) {
       return response()->json($validator->errors(), 400);
