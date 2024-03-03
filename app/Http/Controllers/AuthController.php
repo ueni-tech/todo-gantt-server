@@ -43,7 +43,7 @@ class AuthController extends Controller
     return response()->json([
       'message' => 'ユーザー登録が完了しました。',
       'user' => $user,
-      'token' => auth()->attempt($request->only('email', 'password'))
+      'access_token' => auth()->attempt($request->only('email', 'password'))
     ], 201);
   }
 
