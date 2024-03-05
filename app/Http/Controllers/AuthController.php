@@ -26,6 +26,7 @@ class AuthController extends Controller
       'email.email' => 'メールアドレスの形式で入力してください',
       'password.required' => 'パスワードを入力してください',
       'password.min' => 'パスワードは6文字以上の英数字で入力してください',
+      'password.regex' => 'パスワードは6文字以上の英数字で入力してください',
       'password.confirmed' => 'パスワードが一致しません', 
     ]
   );
