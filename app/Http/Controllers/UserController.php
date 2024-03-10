@@ -34,10 +34,14 @@ class UserController extends Controller
 
     /**
      * Display the specified resource.
+     * 
+     * @param string $id
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function show(string $id)
+    public function show(string $id): \Illuminate\Http\JsonResponse
     {
-        //
+        $user = User::find($id);
+        return response()->json($user, 200);
     }
 
     /**
@@ -50,21 +54,17 @@ class UserController extends Controller
 
     /**
      * Update the specified resource in storage.
+     * 
+     * @param UpdateRequest $request
+     * @param string $id
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function update(UpdateRequest $request, string $id)
+    public function update(UpdateRequest $request, string $id): \Illuminate\Http\JsonResponse
     {
         $user = User::find($id);
-        if ($request->has('name')) {
-            $user->name = $request->name;
-        }
-        if ($request->has('email')) {
-            $user->email = $request->email;
-        }
-        if ($request->has('password')) {
-            $user->password = bcrypt($request->password);
-        }
+        $user->name = $request->name;
         $user->save();
-    
+
         return response()->json($user, 200);
     }
 
