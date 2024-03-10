@@ -37,6 +37,9 @@ Route::group([
   Route::post('me', [AuthController::class, 'me']);
 });
 
+// ユーザーのルート
+Route::post('/users/{id}', [UserController::class, 'update']);
+
 // チームのルート
 Route::get('/teams', [TeamController::class, 'index']);
 Route::post('/teams', [TeamController::class, 'store']);
