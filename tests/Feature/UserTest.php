@@ -8,9 +8,11 @@ use Tests\TestCase;
 
 class UserTest extends TestCase
 {
+  use RefreshDatabase;
+
   public function test_should_list_empty_users(): void
   {
-    $response = $this->get('/api/todos');
+    $response = $this->get('/api/users');
 
     $response->assertStatus(200);
   }
