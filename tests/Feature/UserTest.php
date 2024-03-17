@@ -8,19 +8,23 @@ use Tests\TestCase;
 
 class UserTest extends TestCase
 {
-  // テスト後にデータベースをリセットする
-  use RefreshDatabase;
-
-  // メソッド名は「test〇〇」であること
-  public function testHello()
+  public function test_should_list_empty_users(): void
   {
-    // レコードが0件かチェック
-    $this->assertDatabaseCount('users', 0);
+    $response = $this->get('/api/todos');
 
-    // テストユーザーを生成
+    $response->assertStatus(200);
+  }
+
+  public function test_should_list_users(): void
+  {
     $user = User::factory()->create();
 
-    // レコードが1件かチェック
-    $this->assertDatabaseCount('users', 1);
+    $response = $this->get('/api/users');
+
+    $response->assertStatus(200)->assertJsonFragment([
+      'id' => $user->id,
+      'name' => $user->name,
+      'email' => $user->email,
+    ]);
   }
 }
