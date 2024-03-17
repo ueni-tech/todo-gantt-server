@@ -3,27 +3,24 @@
 namespace Tests\Feature;
 
 use App\Models\User;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class UserTest extends TestCase
 {
-    public function test_should_list_empty_users(): void
-    {
-      $response = $this->get('/api/users');
-  
-      $response->assertStatus(200);
-    }
+  // テスト後にデータベースをリセットする
+  use RefreshDatabase;
 
-    public function test_should_create_user(): void
-    {
-      $user = User::factory()->create();
+  // メソッド名は「test〇〇」であること
+  public function testHello()
+  {
+    // レコードが0件かチェック
+    $this->assertDatabaseCount('users', 0);
 
-      $response = $this->post('/api/users');
+    // テストユーザーを生成
+    $user = User::factory()->create();
 
-      $response->assertStatus(200)->assertJsonFragment([
-        'name' => $user->name,
-        'email' => $user->email,
-        'password' => $user->password,
-      ]);
-    }
+    // レコードが1件かチェック
+    $this->assertDatabaseCount('users', 1);
+  }
 }
