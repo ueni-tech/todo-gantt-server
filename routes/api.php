@@ -39,6 +39,7 @@ Route::group([
 });
 
 // ユーザーのルート
+Route::get('/users', [UserController::class, 'index']);
 Route::get('/users/{id}', [UserController::class, 'show']);
 Route::put('/users/{id}', [UserController::class, 'update']);
 
