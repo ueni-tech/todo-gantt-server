@@ -77,9 +77,9 @@ class UserController extends Controller
    */
   public function destroy(string $id): \Illuminate\Http\JsonResponse
   {
-    $team = User::find($id);
-    $team->delete();
+    $user = User::find($id);
+    $user->delete();
 
-    return response()->json($team, 204);
+    return response()->json($user, 204);
   }
 }
