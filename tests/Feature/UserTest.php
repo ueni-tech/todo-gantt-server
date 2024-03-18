@@ -29,4 +29,17 @@ class UserTest extends TestCase
       'email' => $user->email,
     ]);
   }
+
+  public function test_created_user(): void
+  {
+    $response = $this->post('/api/auth/register', [
+      'name' => 'yamada taro',
+      'email' => 'yamada@aaa.com'
+    ]);
+
+    $response->assertStatus(200)->assertJsonFragment([
+      'name' => 'yamada taro',
+      'email' => 'yamada@aaa.com'
+    ]);
+  }
 }
