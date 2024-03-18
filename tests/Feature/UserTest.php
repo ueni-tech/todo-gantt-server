@@ -29,4 +29,15 @@ class UserTest extends TestCase
       'email' => $user->email,
     ]);
   }
+
+  public function test_delete_user(): void
+  {
+    $user = User::factory()->create();
+
+    $response = $this->delete("/api/users/{$user->id}");
+
+    $response->assertStatus(204)->assertJsonFragment([
+      'message' => 'User deleted successfully'
+    ]);
+  }
 }

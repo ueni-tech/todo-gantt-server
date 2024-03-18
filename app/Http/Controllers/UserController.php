@@ -69,11 +69,17 @@ class UserController extends Controller
         return response()->json($user, 200);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
-    }
+  /**
+   * 指定されたチームの削除
+   * 
+   * @param  string  $id
+   * @return \Illuminate\Http\JsonResponse
+   */
+  public function destroy(string $id): \Illuminate\Http\JsonResponse
+  {
+    $team = User::find($id);
+    $team->delete();
+
+    return response()->json($team, 204);
+  }
 }
