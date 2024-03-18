@@ -36,7 +36,7 @@ class UserTest extends TestCase
 
     $response = $this->delete("/api/users/{$user->id}");
 
-    $response->assertStatus(200)->assertJsonFragment([
+    $response->assertStatus(204)->assertJsonFragment([
       'message' => 'User deleted successfully'
     ]);
   }
