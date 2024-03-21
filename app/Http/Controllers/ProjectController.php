@@ -31,7 +31,7 @@ class ProjectController extends Controller
     {
         $project = new Project();
         $project->name = $request->name;
-        $project->team_id = 1; // あとでリクエストから取得するように変更する
+        $project->team_id = 5; // あとでリクエストから取得するように変更する
         $project->save();
 
         return response()->json($project, 201);
