@@ -34,4 +34,5 @@ jobs:
         env:
           DB_CONNECTION: sqlite
           DB_DATABASE: database/database.sqlite
+          JWT_SECRET: ${{ secrets.JWT_SECRET }}
         run: php artisan test --env=testing.ci
